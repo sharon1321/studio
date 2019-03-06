@@ -1,26 +1,22 @@
 package com.samsung.sds.brightics.server.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.samsung.sds.brightics.common.core.util.JsonUtil;
 import com.samsung.sds.brightics.server.common.util.ValidationUtil;
-import com.samsung.sds.brightics.server.model.entity.BrtcDatasources;
-import com.samsung.sds.brightics.server.model.entity.BrtcS3Datasource;
-import com.samsung.sds.brightics.server.model.entity.BrtcScript;
-import com.samsung.sds.brightics.server.model.entity.BrtcSql;
+import com.samsung.sds.brightics.server.model.entity.*;
+import com.samsung.sds.brightics.server.model.entity.repository.BrtcCloudConnectionRepository;
 import com.samsung.sds.brightics.server.model.entity.repository.BrtcDatasourcesRepository;
 import com.samsung.sds.brightics.server.model.entity.repository.BrtcS3DatasourceRepository;
 import com.samsung.sds.brightics.server.model.entity.repository.BrtcScriptRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 @Service
 public class MetadataConverterService {
@@ -33,14 +29,17 @@ public class MetadataConverterService {
 
     @Autowired
     public BrtcScriptRepository brtcScriptRepository;
-    
+
     @Autowired
     public BrtcS3DatasourceRepository brtcS3DatasourceRepository;
+
+    @Autowired
+    public BrtcCloudConnectionRepository brtcCloudConnectionRepository;
 
 
     public static final String METADATA_KEY = "metadata";
     private Map<String, Function<JsonObject, JsonElement>> metadataRepositoryFunctions = new HashMap<>();
-    
+
     public final Function<JsonObject, JsonElement> SQL = new Function<JsonObject, JsonElement>() {
 
         @Override
@@ -81,7 +80,7 @@ public class MetadataConverterService {
 
     };
     public final Function<JsonObject, JsonElement> S3_DATASOURCE = new Function<JsonObject, JsonElement>() {
-        
+
         @Override
         public JsonElement apply(JsonObject t) {
             BrtcS3Datasource brtcS3Datasource = JsonUtil.fromJson(t, BrtcS3Datasource.class);
@@ -89,7 +88,19 @@ public class MetadataConverterService {
             ValidationUtil.throwIfEmpty(datasourceResult, "datasource for s3");
             return JsonUtil.toJsonObject(datasourceResult);
         }
-        
+
+    };
+
+    public final Function<JsonObject, JsonElement> CLOUD_CONNECTION = new Function<JsonObject, JsonElement>() {
+
+        @Override
+        public JsonElement apply(JsonObject t) {
+            BrtcCloudConnection brtcCloudConnection = JsonUtil.fromJson(t, BrtcCloudConnection.class);
+            BrtcCloudConnection connectionResult = brtcCloudConnectionRepository.findOne(brtcCloudConnection.getConnectionName());
+            ValidationUtil.throwIfEmpty(connectionResult, "connection for Cloud Service(AWS)");
+            return JsonUtil.toJsonObject(connectionResult);
+        }
+
     };
 
     @PostConstruct
@@ -98,6 +109,7 @@ public class MetadataConverterService {
         metadataRepositoryFunctions.put("script", SCRIPT);
         metadataRepositoryFunctions.put("datasource", DATASOURCE);
         metadataRepositoryFunctions.put("s3", S3_DATASOURCE);
+        metadataRepositoryFunctions.put("connection", CLOUD_CONNECTION);
     }
 
     public boolean isMetadataRequest(JsonObject json) {
