@@ -32,17 +32,17 @@ def unload_model(model, path):
         json.dump(data_json.to_json(model, for_redis=True), codecs.getwriter('utf-8')(fp), ensure_ascii=False)
 
 
-def write_to_s3(table, datasource, object_key):
+def write_to_s3(table, connection, bucket_name, object_key):
     client = boto3.client(
         's3',
-        aws_access_key_id=datasource['accessKeyId'],
-        aws_secret_access_key=datasource['secretAccessKey'],
+        aws_access_key_id=connection['accessKeyId'],
+        aws_secret_access_key=connection['secretAccessKey'],
         use_ssl=False
     )
     csv_buffer = io.StringIO()
     table.to_csv(csv_buffer, index=False)
     csv_buffer.seek(0)
-    client.put_object(Bucket=datasource['bucketName'], Key=object_key, Body=csv_buffer.getvalue())
+    client.put_object(Bucket=bucket_name, Key=object_key, Body=csv_buffer.getvalue())
 
 
 def write_to_db(table, tableName, datasource, ifExists='fail'):
