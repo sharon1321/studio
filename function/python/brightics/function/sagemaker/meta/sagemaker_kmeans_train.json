@@ -363,32 +363,6 @@
                 "validation": [],
                 "type": "Integer",
                 "placeHolder": "86400"
-            },
-            {
-                "id": "data_location",
-                "label": "Data Location",
-                "description": "Data location in S3",
-                "mandatory": false,
-                "items": [],
-                "visibleOption": [],
-                "control": "InputBox",
-                "columnType": [],
-                "validation": [],
-                "type": "String",
-                "placeHolder": "s3://<default_bucket>/sagemaker-record-sets/"
-            },
-            {
-                "id": "output_path",
-                "label": "Output Path",
-                "description": "Output path in S3.",
-                "mandatory": false,
-                "items": [],
-                "visibleOption": [],
-                "control": "InputBox",
-                "columnType": [],
-                "validation": [],
-                "type": "String",
-                "placeHolder": "s3://<default_bucket>/"
             }
         ]
     },
