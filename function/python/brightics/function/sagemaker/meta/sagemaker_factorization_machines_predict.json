@@ -4,16 +4,17 @@
         "content": ""
     },
     "specJson": {
-        "category": "script",
+        "category": "textanalytics",
         "func": "brightics.function.sagemaker.factorization_machines$factorization_machines_predict",
         "name": "brightics.function.sagemaker.factorization_machines$factorization_machines_predict",
         "context": "python",
         "label": "Factorization Machines Predict (SageMaker)",
-        "description": "This function predicts from a factorization machines model using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/fact-machines.html>",
+        "description": "This function predicts from a SageMaker built-in factorization machines model using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/fact-machines.html>",
         "tags": [],
         "version": "3.6",
         "inputs": {
-            "table": ""
+            "table": "",
+            "model": ""
         },
         "outputs": {
             "out_table": ""
@@ -21,6 +22,9 @@
         "meta": {
             "table": {
                 "type": "table"
+            },
+            "model": {
+            	"type": "model"
             },
             "out_table": {
                 "type": "table"
@@ -48,6 +52,161 @@
                 "validation": [],
                 "type": "String",
                 "placeHolder": "prediction"
+            },
+            {
+                "id": "instance_count",
+                "label": "Instance Count",
+                "description": "The number of ML compute instances to use.",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder": "1"
+            },
+            {
+                "id": "instance_type",
+                "label": "Instance Type",
+                "description": "Instance Type",
+                "mandatory": false,
+                "items": [
+                    {
+                        "label": "ml.m5.large",
+                        "value": "ml.m5.large",
+                        "default": true
+                    },
+                    {
+                        "label": "ml.m5.xlarge",
+                        "value": "ml.m5.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.2xlarge",
+                        "value": "ml.m5.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.4xlarge",
+                        "value": "ml.m5.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.12xlarge",
+                        "value": "ml.m5.12xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.24xlarge",
+                        "value": "ml.m5.24xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.xlarge",
+                        "value": "ml.m4.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.2xlarge",
+                        "value": "ml.m4.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.4xlarge",
+                        "value": "ml.m4.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.10xlarge",
+                        "value": "ml.m4.10xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.16xlarge",
+                        "value": "ml.m4.16xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.xlarge",
+                        "value": "ml.c5.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.2xlarge",
+                        "value": "ml.c5.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.4xlarge",
+                        "value": "ml.c5.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.9xlarge",
+                        "value": "ml.c5.9xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.18xlarge",
+                        "value": "ml.c5.18xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.xlarge",
+                        "value": "ml.c4.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.2xlarge",
+                        "value": "ml.c4.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.4xlarge",
+                        "value": "ml.c4.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.8xlarge",
+                        "value": "ml.c4.8xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p3.2xlarge",
+                        "value": "ml.p3.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p3.8xlarge",
+                        "value": "ml.p3.8xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p3.16xlarge",
+                        "value": "ml.p3.16xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p2.xlarge",
+                        "value": "ml.p2.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p2.8xlarge",
+                        "value": "ml.p2.8xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p2.16xlarge",
+                        "value": "ml.p2.16xlarge",
+                        "default": false
+                    }
+                ],
+                "visibleOption": [],
+                "control": "DropDownList",
+                "columnType": [],
+                "validation": []
             }
         ]
     },

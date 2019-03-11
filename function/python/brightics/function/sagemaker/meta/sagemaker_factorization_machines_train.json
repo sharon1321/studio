@@ -4,12 +4,12 @@
         "content": ""
     },
     "specJson": {
-        "category": "script",
-        "func": "brightics.function.sagemaker.factorization_machines$factorization_machines_predict",
-        "name": "brightics.function.sagemaker.factorization_machines$factorization_machines_predict",
+        "category": "textanalytics",
+        "func": "brightics.function.sagemaker.factorization_machines$factorization_machines_train",
+        "name": "brightics.function.sagemaker.factorization_machines$factorization_machines_train",
         "context": "python",
-        "label": "Factorization Machines Predict (SageMaker)",
-        "description": "This function predicts a value from a factorization machines model trained already, which is an algorithm provided by Amazon SageMaker, using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/fact-machines.html>",
+        "label": "Factorization Machines Train (SageMaker)",
+        "description": "This function trains a factorization machines model, which is an algorithm provided by Amazon SageMaker, using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/fact-machines.html>",
         "tags": [],
         "version": "3.6",
         "inputs": {
