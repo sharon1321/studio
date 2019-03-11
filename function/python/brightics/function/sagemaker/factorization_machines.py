@@ -161,8 +161,14 @@ def factorization_machines_predict(
             out_table[prediction_col] = prediction
 
         finally:
-            pass
-            # todo kill the prediction job if required.
+            if transformer.latest_transform_job is not None:
+                sagemaker_client = sagemaker_session.sagemaker_client
+
+                job_name = transformer.latest_transform_job.name
+                description = sagemaker_client.describe_transform_job(TransformJobName=job_name)
+                if description['TransformJobStatus'] != 'Completed' and \
+                    description['TransformJobStatus'] != 'Failed':
+                    sagemaker_client.stop_transform_job(TransformJobName=job_name)
 
     else:
         raise_runtime_error("Unsupported model")
