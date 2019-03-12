@@ -158,7 +158,7 @@ def factorization_machines_predict(
                     prediction.extend([obj['score'] for obj in output['predictions']])
                 else:
                     prediction.extend([obj['predicted_label'] for obj in output['predictions']])
-    
+
             out_table = table.copy()
             out_table[prediction_col] = prediction
 

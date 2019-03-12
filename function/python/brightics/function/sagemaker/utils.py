@@ -63,4 +63,3 @@ def get_model_data_path(estimator):
         model_uri = os.path.join(estimator.output_path, estimator.latest_training_job.name, 'output', 'model.tar.gz')
 
     return model_uri
-
