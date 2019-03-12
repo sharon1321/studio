@@ -8,6 +8,7 @@ from brightics.function.sagemaker.utils import get_logs
 from brightics.function.sagemaker.utils import record_set
 from brightics.function.sagemaker.utils import output_data_from_s3
 from brightics.function.sagemaker.utils import kwargs_from_string
+from brightics.function.sagemaker.utils import get_model_data_path
 from brightics.function.utils import _model_dict
 
 
@@ -56,7 +57,8 @@ def kmeans_train(table,
             sagemaker_client = sagemaker_session.sagemaker_client
 
             job_name = sagemaker_kmeans.latest_training_job.name
-            model_data = sagemaker_kmeans.model_data
+            model_data = get_model_data_path(sagemaker_kmeans)
+
             url = '''<https://{}.console.aws.amazon.com/sagemaker/home?region={}#/jobs/{}>'''.format(
                 region_name, region_name, job_name)
             description = sagemaker_client.describe_training_job(TrainingJobName=job_name)
