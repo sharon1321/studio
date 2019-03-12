@@ -4,7 +4,7 @@
         "content": ""
     },
     "specJson": {
-        "category": "textanalytics",
+        "category": "aws",
         "func": "brightics.function.sagemaker.factorization_machines$factorization_machines_predict",
         "name": "brightics.function.sagemaker.factorization_machines$factorization_machines_predict",
         "context": "python",

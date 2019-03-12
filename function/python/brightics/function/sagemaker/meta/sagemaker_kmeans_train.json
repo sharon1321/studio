@@ -4,7 +4,7 @@
         "content": ""
     },
     "specJson": {
-        "category": "textanalytics",
+        "category": "aws",
         "func": "brightics.function.sagemaker.kmeans$kmeans_train",
         "name": "brightics.function.sagemaker.kmeans$kmeans_train",
         "context": "python",
