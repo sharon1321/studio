@@ -9,6 +9,7 @@ from brightics.function.sagemaker.utils import get_logs
 from brightics.function.sagemaker.utils import output_data_from_s3
 from brightics.function.sagemaker.utils import kwargs_from_string
 from brightics.function.sagemaker.utils import record_set
+from brightics.function.sagemaker.utils import get_model_data_path
 
 
 def factorization_machines_train(table,
@@ -57,7 +58,8 @@ def factorization_machines_train(table,
             sagemaker_client = sagemaker_session.sagemaker_client
 
             job_name = sagemaker_fm.latest_training_job.name
-            model_data = sagemaker_fm.model_data
+            model_data = get_model_data_path(sagemaker_fm)
+
             url = '''<https://{}.console.aws.amazon.com/sagemaker/home?region={}#/jobs/{}>'''.format(
                 region_name, region_name, job_name)
             description = sagemaker_client.describe_training_job(TrainingJobName=job_name)
