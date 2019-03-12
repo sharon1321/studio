@@ -5,8 +5,8 @@
     },
     "specJson": {
         "category": "aws",
-        "func": "brightics.function.sagemaker.factorization_machines$factorization_machines_train",
-        "name": "brightics.function.sagemaker.factorization_machines$factorization_machines_train",
+        "func": "brightics.function.sagemaker$factorization_machines_train",
+        "name": "brightics.function.sagemaker$factorization_machines_train",
         "context": "python",
         "label": "Factorization Machines Train (SageMaker)",
         "description": "This function trains a factorization machines model, which is an algorithm provided by Amazon SageMaker, using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/fact-machines.html>",
