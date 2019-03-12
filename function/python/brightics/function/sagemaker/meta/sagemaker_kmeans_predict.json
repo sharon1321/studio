@@ -9,7 +9,7 @@
         "name": "brightics.function.sagemaker.kmeans$kmeans_predict",
         "context": "python",
         "label": "K-Means Predict (SageMaker)",
-        "description": "This function predicts from a SageMaker built-in K-Means model using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/fact-machines.html>",
+        "description": "This function predicts from a SageMaker built-in k-means model using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/k-means.html>",
         "tags": [],
         "version": "3.6",
         "inputs": {
