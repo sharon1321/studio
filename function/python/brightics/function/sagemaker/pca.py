@@ -57,7 +57,7 @@ def pca_train(table,
 
             job_name = pca.latest_training_job.name
             model_data = get_model_data_path(pca)
-            url = '''<https://{}console.aws.amazon.com/sagemaker/home?region{}#jobs/{}>'''.format(
+            url = '''<https://{}.console.aws.amazon.com/sagemaker/home?region{}#jobs/{}>'''.format(
                 region_name, region_name, job_name)
             description = sagemaker_client.describe_training_job(TrainingJobName=job_name)
 
