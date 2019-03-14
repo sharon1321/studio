@@ -7,7 +7,7 @@ var users = require('./lib/users');
 var deploys = require('./lib/deploys');
 var monitor = require('./lib/monitor');
 var datasources = require('./lib/datasources');
-var s3 = require('./lib/s3');
+var s3 = require('./lib/connection');
 
 router.use(agents);
 router.use(schedules);
