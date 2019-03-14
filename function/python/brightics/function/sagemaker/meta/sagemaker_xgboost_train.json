@@ -359,8 +359,8 @@
             },
             {
                 "id": "volume_size",
-                "label": "Training Instance Volume Size (GB)",
-                "description": "",
+                "label": "Train Volume Size in GB",
+                "description": "The size of the ML storage volume that you want to provision.",
                 "mandatory": false,
                 "items": [],
                 "visibleOption": [],
@@ -374,8 +374,8 @@
             },
             {
                 "id": "max_runtime",
-                "label": "Max Training Time (Min)",
-                "description": "",
+                "label": "Timeout in Seconds",
+                "description": "Timeout in seconds for training",
                 "mandatory": false,
                 "items": [],
                 "visibleOption": [],
