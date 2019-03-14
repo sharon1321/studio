@@ -6,3 +6,7 @@ from .knn import knn_train
 from .knn import knn_predict
 from .linear_learner import linear_learner_train
 from .linear_learner import linear_learner_predict
+from .pca import PCA_train
+from .pca import PCA_predict
+from .xgboost import xgboost_train
+from .xgboost import xgboost_predict
