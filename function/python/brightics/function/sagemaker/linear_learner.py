@@ -183,7 +183,7 @@ def linear_learner_train(table,
 
             rb = BrtcReprBuilder()
             rb.addMD(strip_margin('''
-            | ## Sagemaker Linear Learner Result
+            | ## Sagemaker Linear Learner Train Result
             | {message}
             |
             | ### Logs

@@ -17,7 +17,7 @@ def kmeans_train(table,
     connection, role, region_name,
     kwargstr=None,
     mini_batch_size=None, wait=True, job_name=None,
-    train_instance_count=1, train_instance_type='ml.m4.xlarge',
+    train_instance_count=1, train_instance_type='ml.m5.large',
     train_volume_size=30, train_max_run=24 * 60 * 60,
     data_location=None, output_path=None):
 
