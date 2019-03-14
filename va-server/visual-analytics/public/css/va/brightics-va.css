@@ -1,4 +1,4 @@
-/*   Brightics VA Build 190114 */
+/*   Brightics VA Build 190314 */
 * {
     -webkit-box-sizing: content-box;
        -moz-box-sizing: content-box;
@@ -280,7 +280,7 @@ textarea.jqx-text-area-element-office{
     box-sizing: content-box !important;
 }
 input[type=search].jqx-input-office {
-    background: none !important; 
+    background: none !important;
 }
 
 input[type=search].jqx-input-office::-webkit-search-cancel-button {
@@ -7495,6 +7495,10 @@ body:not([perm~='perm_udf_create']) .brtc-style-views-udf-fnunit > .brtc-style-u
     background-image: url('images/func-manipulation-20.png');
 }
 
+.brtc-va-fnunit-category-aws > .brtc-va-dialogs-index-item-label {
+    background-image: url('images/func-aws-20.png');
+}
+
 .brtc-va-fnunit-category-core-layer > .brtc-va-dialogs-index-item-label,
 .brtc-va-fnunit-category-convolutional-layer > .brtc-va-dialogs-index-item-label,
 .brtc-va-fnunit-category-pooling-layer > .brtc-va-dialogs-index-item-label,
@@ -8362,6 +8366,10 @@ body:not([perm~='perm_udf_create']) .brtc-style-views-udf-fnunit > .brtc-style-u
     background-color: #efa434;
 }
 
+.brtc-va-editors-sheet-controls-dataselector-item .selected.brtc-va-fnunit-category-aws {
+    background-color: #f7a80d;
+}
+
 .brtc-va-editors-sheet-controls-dataselector-item .selected.brtc-va-fnunit-category-regression {
     background-color: #fa8d5d;
 }
@@ -8448,6 +8456,10 @@ body:not([perm~='perm_udf_create']) .brtc-style-views-udf-fnunit > .brtc-style-u
 
 .brtc-va-editors-sheet-controls-dataselector-item .selected.brtc-va-fnunit-category-unknown > .brtc-va-views-palette-fnunit-icon {
     background-image: url('images/func-unknown-w-20.png');
+}
+
+.brtc-va-editors-sheet-controls-dataselector-item .selected.brtc-va-fnunit-category-aws > .brtc-va-views-palette-fnunit-icon {
+    background-image: url('images/func-aws-w-20.png');
 }
 
 .brtc-va-dialogs-contents-label-main {
@@ -12853,7 +12865,7 @@ div.brtc-va-refine-step-validation-error {
     height: 29px;
 }
 
-.brtc-va-editors-diagram-diagrameditorpage-paper-scale-small 
+.brtc-va-editors-diagram-diagrameditorpage-paper-scale-small
 .brtc-va-editors-diagram-diagrameditorpage-function-multiselected-toolbar {
      -ms-transform: scale(.8);
     -moz-transform: scale(.8);
@@ -15125,6 +15137,10 @@ div.brtc-va-refine-step-validation-error {
     border-top-color: #efa434;
 }
 
+.brtc-va-editors-sheet-panels-propertiespanel-header.brtc-va-fnunit-category-aws {
+    border-top-color: #f7a80d;
+}
+
 .brtc-va-editors-sheet-panels-propertiespanel-header.brtc-va-fnunit-category-regression {
     border-top-color: #fa8d5d;
 }
@@ -15159,6 +15175,10 @@ div.brtc-va-refine-step-validation-error {
 
 .brtc-va-editors-sheet-panels-propertiespanel-header[context=python] {
     border-top-color: rgb(54, 110, 157) !important;
+}
+
+.brtc-va-editors-sheet-panels-propertiespanel-header[context=python].brtc-va-fnunit-category-aws {
+    border-top-color: rgb(247, 168, 13) !important;
 }
 
 .brtc-va-editors-sheet-panels-propertiespanel-header[context=scala] {
@@ -15314,6 +15334,10 @@ div.brtc-va-refine-step-validation-error {
     color: #efa434;
 }
 
+.brtc-va-fnunit-category-aws > .brtc-va-editors-sheet-panels-basepanel-header-title {
+    color: #f7a80d;
+}
+
 .brtc-va-fnunit-category-regression > .brtc-va-editors-sheet-panels-basepanel-header-title {
     color: #fa8d5d;
 }
@@ -15348,6 +15372,10 @@ div.brtc-va-refine-step-validation-error {
 
 .brtc-va-editors-sheet-panels-propertiespanel-header[context=python] > .brtc-va-editors-sheet-panels-basepanel-header-title {
     color: rgb(54, 110, 157) !important;
+}
+
+.brtc-va-editors-sheet-panels-propertiespanel-header[context=python].brtc-va-fnunit-category-aws > .brtc-va-editors-sheet-panels-basepanel-header-title {
+    color: rgb(247, 168, 13) !important;
 }
 
 .brtc-va-editors-sheet-panels-propertiespanel-header[context=scala] > .brtc-va-editors-sheet-panels-basepanel-header-title {
@@ -19606,6 +19634,10 @@ div.brtc-va-refine-step-validation-error {
     background-position-x: -400px;
 }
 
+.brtc-va-fnunit-category-aws > .brtc-style-views-palette-fnunit-icon {
+    background-position-x: -420px;
+}
+
 .brtc-va-fnunit-category-script > .brtc-style-views-palette-fnunit-icon {
     background-position-x: -320px;
 }
@@ -21560,7 +21592,7 @@ div[role=row].disable .brtc-grid-cell {
 .brtc-va-views-properties-pages.import-setting-dialog .jqx-expander-header-content,
 .brtc-va-views-properties-pages.export-setting-dialog .jqx-expander-header-content {
     margin-left: 12px !important;
-} 
+}
 
 .brtc-va-views-properties-pages.import-setting-dialog .jqx-expander-header,
 .brtc-va-views-properties-pages.export-setting-dialog .jqx-expander-header {

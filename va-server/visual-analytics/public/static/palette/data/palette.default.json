@@ -25,14 +25,6 @@
                 "visible": true
             },
             {
-                "func": "readFromS3",
-                "visible": true
-            },
-            {
-                "func": "writeToS3",
-                "visible": true
-            },
-            {
                 "func": "createTablePython",
                 "visible": true
             },
@@ -1267,6 +1259,21 @@
             {
                 "func": "uncertaintyQuantification",
                 "visible": false
+            }
+        ]
+    },
+    {
+        "label": "Cloud - AWS",
+        "key": "aws",
+        "visible": true,
+        "functions": [
+            {
+                "func": "readFromS3",
+                "visible": true
+            },
+            {
+                "func": "writeToS3",
+                "visible": true
             }
         ]
     },

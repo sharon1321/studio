@@ -34,29 +34,29 @@ var _executeInPermission = function (req, res, perm, task) {
     });
 };
 
-var convertS3 = function ({ accessKeyId, bucketName, secretAccessKey, _links }) {
-    const hrefPrefix = '/api/core/v2/entity/s3/';
+var convertConnection = function ({ accessKeyId, secretAccessKey, cloudType, _links }) {
+    const hrefPrefix = '/api/core/v2/entity/connection/';
 
     const url = _links.self.href;
     return {
         accessKeyId,
-        bucketName,
         secretAccessKey: '',
-        datasourceName: url.substring(url.indexOf(hrefPrefix) + hrefPrefix.length),
+        cloudType,
+        connectionName: url.substring(url.indexOf(hrefPrefix) + hrefPrefix.length),
     };
 };
 
-var getDatasource = function (req, res) {
+var getConnection = function (req, res) {
     var task = function (permissions) {
-        var datasourceName = req.params.datasourceName;
-        var options = __BRTC_CORE_SERVER.createRequestOptions('GET', '/api/core/v2/entity/s3/' + datasourceName);
+        var connectionName = req.params.connectionName;
+        var options = __BRTC_CORE_SERVER.createRequestOptions('GET', '/api/core/v2/entity/connection/' + connectionName);
         __BRTC_CORE_SERVER.setBearerToken(options, req.accessToken);
         request(options, function (error, response, body) {
             if (error) {
                 return __BRTC_ERROR_HANDLER.sendServerError(res, error);
             } else {
                 if (response.statusCode === 200) {
-                    return res.json(convertS3(JSON.parse(body)));
+                    return res.json(convertConnection(JSON.parse(body)));
                 } else {
                     // __BRTC_ERROR_HANDLER.sendServerError(res, JSON.parse(body));
                     // res.status(response.statusCode).send(response.body);
@@ -72,9 +72,12 @@ var getDatasource = function (req, res) {
     _executeInPermission(req, res, __BRTC_PERM_HELPER.PERMISSIONS.PERM_DATASOURCE_READ, task);
 };
 
-var listDatasource = function (req, res) {
+var listConnections = function (req, res) {
     var task = function (permissions) {
-        var options = __BRTC_CORE_SERVER.createRequestOptions('GET', '/api/core/v2/entity/s3');
+        var requestUrl = '/api/core/v2/entity/connection';
+        if (req.query.cloudType) requestUrl += '/search/findByCloudType?cloudType=' + req.query.cloudType;
+
+        var options = __BRTC_CORE_SERVER.createRequestOptions('GET', requestUrl);
         __BRTC_CORE_SERVER.setBearerToken(options, req.accessToken);
         request(options, function (error, response, body) {
             if (error) {
@@ -82,7 +85,7 @@ var listDatasource = function (req, res) {
             } else {
                 if (response.statusCode === 200) {
                     const items = JSON.parse(body);
-                    res.json(items._embedded.brtcS3Datasources.map(convertS3));
+                    res.json(items._embedded.brtcCloudConnections.map(convertConnection));
                 } else {
                     __BRTC_ERROR_HANDLER.sendServerError(res, JSON.parse(body));
                 }
@@ -92,9 +95,9 @@ var listDatasource = function (req, res) {
     _executeInPermission(req, res, __BRTC_PERM_HELPER.PERMISSIONS.PERM_DATASOURCE_READ, task);
 };
 
-var createDatasource = function (req, res) {
+var createConnection = function (req, res) {
     var task = function (permissions) {
-        var options = __BRTC_CORE_SERVER.createRequestOptions('POST', '/api/core/v2/entity/s3');
+        var options = __BRTC_CORE_SERVER.createRequestOptions('POST', '/api/core/v2/entity/connection');
         __BRTC_CORE_SERVER.setBearerToken(options, req.accessToken);
         options.body = JSON.stringify(getDecryptedDatasource(req));
         request(options, responseHandler(req, res, 201));
@@ -102,22 +105,22 @@ var createDatasource = function (req, res) {
     _executeInPermission(req, res, __BRTC_PERM_HELPER.PERMISSIONS.PERM_DATASOURCE_UPDATE, task);
 };
 
-var updateDatasource = createDatasource;
+var updateConnection = createConnection;
 
-var deleteDatasource = function (req, res) {
+var deleteConnection = function (req, res) {
     var task = function (permissions) {
-        var datasourceName = req.params.datasourceName;
-        var options = __BRTC_CORE_SERVER.createRequestOptions('DELETE', '/api/core/v2/entity/s3/' + datasourceName);
+        var connectionName = req.params.connectionName;
+        var options = __BRTC_CORE_SERVER.createRequestOptions('DELETE', '/api/core/v2/entity/connection/' + connectionName);
         __BRTC_CORE_SERVER.setBearerToken(options, req.accessToken);
         request(options, responseHandler(req, res, 204));
     };
     _executeInPermission(req, res, __BRTC_PERM_HELPER.PERMISSIONS.PERM_DATASOURCE_DELETE, task);
 };
 
-router.get('/s3/:datasourceName', getDatasource);
-router.get('/s3', listDatasource);
-router.post('/s3/:datasourceName', createDatasource);
-router.post('/s3/:datasourceName/update', updateDatasource);
-router.post('/s3/:datasourceName/delete', deleteDatasource);
+router.get('/connection/:connectionName', getConnection);
+router.get('/connection', listConnections);
+router.post('/connection/:connectionName', createConnection);
+router.post('/connection/:connectionName/update', updateConnection);
+router.post('/connection/:connectionName/delete', deleteConnection);
 
 module.exports = router;
