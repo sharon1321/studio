@@ -36,7 +36,7 @@
 				 "control": "ConnectionSelector",
 				 "cloudType": "aws",
 				 "placeHolder": "Select Connection",
-				 "description": ""
+				 "description": "Predefined connection. List of connections can be updated from Connection Management dialog on GUI."
             },
             {
                 "id": "prediction_col",
@@ -68,7 +68,7 @@
             {
                 "id": "train_instance_type",
                 "label": "Train Instance Type",
-                "description": "",
+                "description": "Instance Type. For more information please visit the following web page. <https://aws.amazon.com/sagemaker/pricing/?nc1=h_ls>",
                 "mandatory": false,
                 "items": [
                     {
