@@ -124,7 +124,7 @@ def xgboost_train(table,
 
             single_machine_job_params = copy.deepcopy(common_training_params)
             single_machine_job_params['TrainingJobName'] = job_name
-            single_machine_job_params['OutputDataConfig']['S3OutputPath'] = 's3://{}'.format(bucket_path)
+            single_machine_job_params['OutputDataConfig']['S3OutputPath'] = bucket_path
             single_machine_job_params['ResourceConfig']['InstanceCount'] = 1
 
             sagemaker_client.create_training_job(**single_machine_job_params)
@@ -134,7 +134,7 @@ def xgboost_train(table,
         else:
             distributed_job_params = copy.deepcopy(common_training_params)
             distributed_job_params['TrainingJobName'] = job_name
-            distributed_job_params['OutputDataConfig']['S3OutputPath'] = 's3://{}'.format(bucket_path)
+            distributed_job_params['OutputDataConfig']['S3OutputPath'] = bucket_path
             distributed_job_params['ResourceConfig']['InstanceCount'] = instance_count
 
             sagemaker_client.create_training_job(**distributed_job_params)
@@ -150,7 +150,7 @@ def xgboost_train(table,
 
         if wait is False:
             description = sagemaker_client.describe_training_job(TrainingJobName=job_name)
-            model_data = os.path.join(bucket, job_name, 'output', 'model.tar.gz')
+            model_data = os.path.join('s3://{}'.format(bucket), job_name, 'output', 'model.tar.gz')
             message = ('This function terminated with training job status: {status}.'
             ' Please visit the following link to get more information on the training job.\n\n'
             '- {url}'.format(status=description['TrainingJobStatus'], url=url))
