@@ -138,7 +138,7 @@
             {
                 "id": "kwargstr",
                 "label": "Keyword Arguments",
-                "description": "Keyword arguments. See <https://docs.aws.amazon.com/sagemaker/latest/dg/fact-machines-hyperparameters.html>",
+                "description": "Keyword arguments. See <https://docs.aws.amazon.com/sagemaker/latest/dg/k-means-api-config.html>",
                 "mandatory": false,
                 "items": [],
                 "visibleOption": [],
