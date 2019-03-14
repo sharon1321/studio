@@ -9,7 +9,7 @@
         "name": "brightics.function.sagemaker$xgboost_predict",
         "context": "python",
         "label": "XGBoost Predict (SageMaker)",
-        "description": "",
+        "description": "This function predicts from a SageMaker built-in factorization machines model using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/xgboost.html>",
         "tags": ["aws", "amazon", "sagemaker", "gradient", "boosting"],
         "version": "3.6",
         "inputs": {

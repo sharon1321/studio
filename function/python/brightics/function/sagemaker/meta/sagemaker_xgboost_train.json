@@ -9,7 +9,7 @@
         "name": "brightics.function.sagemaker$xgboost_train",
         "context": "python",
         "label": "XGBoost Train (SageMaker)",
-        "description": "",
+        "description": "This function trains a XGBoost model, which is an algorithm provided by Amazon SageMaker, using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/xgboost.html>",
         "tags": ["aws", "amazon", "sagemaker", "gradient", "boosting"],
         "version": "3.6",
         "inputs": {
