@@ -2,6 +2,7 @@ import io
 import copy
 from time import gmtime
 from time import strftime
+import os
 
 import boto3
 import sagemaker
@@ -65,7 +66,7 @@ def xgboost_train(table,
     role = sagemaker_session.expand_role(role)
 
     bucket = sagemaker_session.default_bucket()
-    prefix = "xgboost-{}".format(strftime("%Y-%m-%d-%H-%M-%S", gmtime()))
+    job_name = "xgboost-{}".format(strftime("%Y-%m-%d-%H-%M-%S", gmtime()))
     bucket_path = 'https://s3-{}.amazonaws.com/{}'.format(region_name, bucket)
 
     s3 = boto_session.resource('s3')
@@ -79,7 +80,7 @@ def xgboost_train(table,
         },
         "RoleArn": role,
         "OutputDataConfig": {
-            "S3OutputPath": bucket_path + "/" + prefix
+            "S3OutputPath": os.path.join(bucket_path, job_name)
         },
         "ResourceConfig": {
             "InstanceCount": instance_count,
@@ -101,7 +102,7 @@ def xgboost_train(table,
                 "DataSource": {
                     "S3DataSource": {
                         "S3DataType": "S3Prefix",
-                        "S3Uri": bucket_path + "/" + prefix + "/train",
+                        "S3Uri": os.path.join(bucket_path,job_name,'train'),
                         "S3DataDistributionType": "FullyReplicated"
                     }
                 },
@@ -116,15 +117,14 @@ def xgboost_train(table,
     input_data = table[feature_cols].values.astype('float32')
     label_data = table[label_col].values.astype('int')
 
-    upload_to_s3(label_data, input_data, prefix, bucket, s3, instance_count)
-    job_name = 'sagemaker-xgboost-' + strftime("%Y-%m-%d-%H-%M-%S", gmtime())
+    upload_to_s3(label_data, input_data, job_name, bucket, s3, instance_count)
+    
     try:
         if instance_count == 1:
 
             single_machine_job_params = copy.deepcopy(common_training_params)
             single_machine_job_params['TrainingJobName'] = job_name
-            single_machine_job_params['OutputDataConfig']['S3OutputPath'] = \
-                bucket_path + "/" + prefix + "/xgboost-single"
+            single_machine_job_params['OutputDataConfig']['S3OutputPath'] = bucket_path
             single_machine_job_params['ResourceConfig']['InstanceCount'] = 1
 
             sagemaker_client.create_training_job(**single_machine_job_params)
@@ -135,7 +135,7 @@ def xgboost_train(table,
             distributed_job_params = copy.deepcopy(common_training_params)
             distributed_job_params['TrainingJobName'] = job_name
             distributed_job_params['OutputDataConfig']['S3OutputPath'] = \
-                bucket_path + "/" + prefix + "/xgboost-distributed"
+                bucket_path + "/" + job_name + "/xgboost-distributed"
             distributed_job_params['ResourceConfig']['InstanceCount'] = instance_count
 
             sagemaker_client.create_training_job(**distributed_job_params)
@@ -151,6 +151,7 @@ def xgboost_train(table,
 
         if wait is False:
             description = sagemaker_client.describe_training_job(TrainingJobName=job_name)
+            model_data = os.path.join(bucket, job_name, 'output', 'model.tar.gz')
             message = ('This function terminated with training job status: {status}.'
             ' Please visit the following link to get more information on the training job.\n\n'
             '- {url}'.format(status=description['TrainingJobStatus'], url=url))
