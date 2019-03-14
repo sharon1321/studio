@@ -1,0 +1,423 @@
+{
+    "script": {
+        "type": "",
+        "content": ""
+    },
+    "specJson": {
+        "category": "aws",
+        "func": "brightics.function.sagemaker$knn_train",
+        "name": "brightics.function.sagemaker$knn_train",
+        "context": "python",
+        "label": "K-Nearest Neighbors Train (Sagemaker)",
+        "description": "Amazon SageMaker k-nearest neighbors (k-NN) algorithm is an index-based algorithm. It uses a non-parametric method for classification or regression. For classification problems, the algorithm queries the k points that are closest to the sample point and returns the most frequently used label of their class as the predicted label. For regression problems, the algorithm queries the k closest points to the sample point and returns the average of their feature values as the predicted value.\n\nDescription here. <https://docs.aws.amazon.com/sagemaker/latest/dg/k-nearest-neighbors.html>",
+        "tags": [],
+        "version": "3.6",
+        "inputs": {
+            "table": ""
+        },
+        "meta": {
+            "table": {
+                "type": "table"
+            },
+            "model": {
+                "type": "model"
+            }
+        },
+        "params": [
+            {
+                "id": "feature_cols",
+                "label": "Feature Columns",
+                "description": "Input Columns",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "ColumnSelector",
+                "columnType": [
+                    "Integer",
+                    "Long",
+                    "Double"
+                ],
+                "validation": [],
+                "multiple": true,
+                "rowCount": 5
+            },
+            {
+                "id": "label_col",
+                "label": "Label Column",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "ColumnSelector",
+                "columnType": [
+                    "Integer",
+                    "Long",
+                    "Double"
+                ],
+                "validation": [],
+                "multiple": false
+            },
+            {
+                "id": "k",
+                "label": "Number of nearest neighbors(K)",
+                "description": "The number of nearest neighbors",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "min": 1
+            },
+            {
+                "id": "predictor_type",
+                "label": "Predictor Type",
+                "description": "The type of inference to use on the data labels",
+                "mandatory": true,
+                "items": [
+                    {
+                        "label": "classifier",
+                        "value": "classifier",
+                        "default": true
+                    },
+                    {
+                        "label": "regressor",
+                        "value": "regressor",
+                        "default": false
+                    }
+                ],
+                "visibleOption": [],
+                "control": "RadioButton",
+                "columnType": [],
+                "validation": []
+            },
+            {
+              "id": "connection",
+              "label": "Connection",
+              "mandatory": true,
+              "visibleOption": [],
+              "control": "ConnectionSelector",
+              "cloudType": "aws",
+              "placeHolder": "Select Connection",
+				 "description": "Predefined connection. List of connections can be updated from Connection Management dialog on GUI."
+            },
+            {
+              "id": "role",
+              "label": "IAM Role",
+              "description": "An AWS IAM role (either name or full ARN)",
+              "mandatory": true,
+              "items": [],
+              "visibleOption": [],
+              "control": "InputBox",
+              "columnType": [],
+              "validation": [],
+              "type": "String",
+              "placeHolder": "either name or full ARN"
+            },
+            {
+                "id": "region_name",
+                "label": "AWS Region",
+                "description": "",
+                "mandatory": true,
+                "items": [
+                    {
+                        "label": "US East (N. Virginia)",
+                        "value": "us-east-1",
+                        "default": false
+                    },
+                    {
+                        "label": "US East (Ohio)",
+                        "value": "us-east-2",
+                        "default": false
+                    },
+                    {
+                        "label": "US West (Oregon)",
+                        "value": "us-west-2",
+                        "default": true
+                    },
+                    {
+                        "label": "Asia Pacific (Seoul)",
+                        "value": "ap-northeast-2",
+                        "default": false
+                    },
+                    {
+                        "label": "Asia Pacific (Sydney)",
+                        "value": "ap-southeast-2",
+                        "default": false
+                    },
+                    {
+                        "label": "Asia Pacific (Tokyo)",
+                        "value": "ap-northeast-1",
+                        "default": false
+                    },
+                    {
+                        "label": "EU (Frankfurt)",
+                        "value": "eu-central-1",
+                        "default": false
+                    },
+                    {
+                        "label": "EU (Ireland)",
+                        "value": "eu-west-1",
+                        "default": false
+                    }
+                ],
+                "visibleOption": [],
+                "control": "DropDownList",
+                "columnType": [],
+                "validation": [],
+                "type": "String"
+            },
+            {
+                "id": "sample_size",
+                "label": "Sample Size",
+                "description": "The number of data points to be sampled from the training data set",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "min": 1
+            },
+            {
+                "id": "kwargstr",
+                "label": "Keyword Arguments",
+                "description": "Keyword arguments. See <https://docs.aws.amazon.com/sagemaker/latest/dg/k-nearest-neighbors.html>",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "String",
+                "placeHolder": "ex) index_type='faiss.IVFPQ', faiss_index_pq_m=1"
+            },
+            {
+                "id": "mini_batch_size",
+                "label": "Size of Mini-batch",
+                "description": "The size of mini-batch used for training.",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder": "5000"
+            },
+            {
+                "id": "wait",
+                "label": "Wait",
+                "description": "Whether the function should wait until the training job completes.",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "BooleanRadio",
+                "columnType": [],
+                "validation": [],
+                "defaultValue": true
+            },
+            {
+                "id": "job_name",
+                "label": "Job Name",
+                "description": "Training job name. If not specified, the estimator generates a default job name, based on the training image name and current timestamp.",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "String",
+                "placeHolder": ""
+            },
+            {
+                "id": "train_instance_count",
+                "label": "Train Instance Count",
+                "description": "The number of ML compute instances to use. For distributed training",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "min": 1,
+                "placeHolder": "1"
+            },
+            {
+                "id": "train_instance_type",
+                "label": "Train Instance Type",
+                "description": "Instance Type. For more information please visit the following web page. <https://aws.amazon.com/sagemaker/pricing/?nc1=h_ls>",
+                "mandatory": false,
+                "items": [
+                    {
+                        "label": "ml.m5.large",
+                        "value": "ml.m5.large",
+                        "default": true
+                    },
+                    {
+                        "label": "ml.m5.xlarge",
+                        "value": "ml.m5.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.2xlarge",
+                        "value": "ml.m5.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.4xlarge",
+                        "value": "ml.m5.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.12xlarge",
+                        "value": "ml.m5.12xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.24xlarge",
+                        "value": "ml.m5.24xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.xlarge",
+                        "value": "ml.m4.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.2xlarge",
+                        "value": "ml.m4.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.4xlarge",
+                        "value": "ml.m4.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.10xlarge",
+                        "value": "ml.m4.10xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.16xlarge",
+                        "value": "ml.m4.16xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.xlarge",
+                        "value": "ml.c5.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.2xlarge",
+                        "value": "ml.c5.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.4xlarge",
+                        "value": "ml.c5.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.9xlarge",
+                        "value": "ml.c5.9xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.18xlarge",
+                        "value": "ml.c5.18xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.xlarge",
+                        "value": "ml.c4.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.2xlarge",
+                        "value": "ml.c4.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.4xlarge",
+                        "value": "ml.c4.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.8xlarge",
+                        "value": "ml.c4.8xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p3.2xlarge",
+                        "value": "ml.p3.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p3.8xlarge",
+                        "value": "ml.p3.8xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p3.16xlarge",
+                        "value": "ml.p3.16xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p2.xlarge",
+                        "value": "ml.p2.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p2.8xlarge",
+                        "value": "ml.p2.8xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p2.16xlarge",
+                        "value": "ml.p2.16xlarge",
+                        "default": false
+                    }
+                ],
+                "visibleOption": [],
+                "control": "DropDownList",
+                "columnType": [],
+                "validation": []
+            },
+            {
+                "id": "train_volume_size",
+                "label": "Train Volume Size in GB",
+                "description": "The size of the ML storage volume that you want to provision.",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder": "30"
+            },
+            {
+                "id": "train_max_run",
+                "label": "Timeout in Seconds",
+                "description": "Timeout in seconds for training",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder": "86400"
+            }
+        ],
+        "outputs": {
+            "model": ""
+        }
+    },
+    "md": ""
+}

@@ -1,0 +1,228 @@
+{
+    "script": {
+        "type": "",
+        "content": ""
+    },
+    "specJson": {
+        "category": "aws",
+        "func": "brightics.function.sagemaker$kmeans_predict",
+        "name": "brightics.function.sagemaker$kmeans_predict",
+        "context": "python",
+        "label": "K-Means Predict (SageMaker)",
+        "description": "This function predicts from a SageMaker built-in k-means model using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/k-means.html>",
+        "tags": [],
+        "version": "3.6",
+        "inputs": {
+            "table": "",
+            "model": ""
+        },
+        "outputs": {
+            "out_table": ""
+        },
+        "meta": {
+            "table": {
+                "type": "table"
+            },
+            "model": {
+            	"type": "model"
+            },
+            "out_table": {
+                "type": "table"
+            }
+        },
+        "params": [
+            {
+			    "id": "connection",
+			    "label": "Connection",
+			    "mandatory": true,
+			    "visibleOption": [],
+			    "control": "ConnectionSelector",
+			    "cloudType": "aws",
+			    "placeHolder": "Select Connection",
+			    "description": "Predefined connection. List of connections can be updated from Connection Management dialog on GUI."
+			},
+            {
+                "id": "prediction_col",
+                "label": "Prediction Column Name",
+                "description": "Prediction Column Name.",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "String",
+                "placeHolder": "prediction"
+            },
+            {
+                "id": "distance_to_cluster_col",
+                "label": "Distance to Cluster Column Name",
+                "description": "Distance to Cluster Column Name.",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "String",
+                "placeHolder": "distance_to_cluster"
+            },
+            {
+                "id": "instance_count",
+                "label": "Instance Count",
+                "description": "The number of ML compute instances to use.",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder": "1"
+            },
+            {
+                "id": "instance_type",
+                "label": "Instance Type",
+                "description": "Instance Type. For more information please visit the following web page. <https://aws.amazon.com/sagemaker/pricing/?nc1=h_ls>",
+                "mandatory": false,
+                "items": [
+                    {
+                        "label": "ml.m5.large",
+                        "value": "ml.m5.large",
+                        "default": true
+                    },
+                    {
+                        "label": "ml.m5.xlarge",
+                        "value": "ml.m5.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.2xlarge",
+                        "value": "ml.m5.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.4xlarge",
+                        "value": "ml.m5.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.12xlarge",
+                        "value": "ml.m5.12xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.24xlarge",
+                        "value": "ml.m5.24xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.xlarge",
+                        "value": "ml.m4.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.2xlarge",
+                        "value": "ml.m4.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.4xlarge",
+                        "value": "ml.m4.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.10xlarge",
+                        "value": "ml.m4.10xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.16xlarge",
+                        "value": "ml.m4.16xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.xlarge",
+                        "value": "ml.c5.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.2xlarge",
+                        "value": "ml.c5.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.4xlarge",
+                        "value": "ml.c5.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.9xlarge",
+                        "value": "ml.c5.9xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.18xlarge",
+                        "value": "ml.c5.18xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.xlarge",
+                        "value": "ml.c4.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.2xlarge",
+                        "value": "ml.c4.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.4xlarge",
+                        "value": "ml.c4.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.8xlarge",
+                        "value": "ml.c4.8xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p3.2xlarge",
+                        "value": "ml.p3.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p3.8xlarge",
+                        "value": "ml.p3.8xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p3.16xlarge",
+                        "value": "ml.p3.16xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p2.xlarge",
+                        "value": "ml.p2.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p2.8xlarge",
+                        "value": "ml.p2.8xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p2.16xlarge",
+                        "value": "ml.p2.16xlarge",
+                        "default": false
+                    }
+                ],
+                "visibleOption": [],
+                "control": "DropDownList",
+                "columnType": [],
+                "validation": []
+            }
+        ]
+    },
+    "md": ""
+}

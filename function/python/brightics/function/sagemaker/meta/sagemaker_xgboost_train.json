@@ -1,0 +1,443 @@
+{
+    "script": {
+        "type": "",
+        "content": ""
+    },
+    "specJson": {
+        "category": "aws",
+        "func": "brightics.function.sagemaker$xgboost_train",
+        "name": "brightics.function.sagemaker$xgboost_train",
+        "context": "python",
+        "label": "XGBoost Train (SageMaker)",
+        "description": "",
+        "tags": [],
+        "version": "3.6",
+        "inputs": {
+            "table": ""
+        },
+        "outputs": {
+            "model": ""
+        },
+        "meta": {
+            "table": {
+                "type": "table"
+            },
+            "model": {
+                "type": "model"
+            }
+        },
+        "params": [
+            {
+                "id": "feature_cols",
+                "label": "Feature Columns",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "ColumnSelector",
+                "columnType": [
+                    "Integer",
+                    "Long",
+                    "Float",
+                    "Double",
+                    "Boolean"
+                ],
+                "validation": [],
+                "multiple": true
+            },
+            {
+                "id": "label_col",
+                "label": "Label Column",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "ColumnSelector",
+                "columnType": [
+                    "Integer",
+                    "Long",
+                    "Float",
+                    "Double",
+                    "Boolean"
+                ],
+                "validation": [],
+                "multiple": false
+            },
+            {
+                "id": "num_class",
+                "label": "Number of Classes",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer"
+            },
+            {
+                "id": "max_depth",
+                "label": "Max Depth",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder": "5"
+            },
+            {
+                "id": "eta",
+                "label": "ETA",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Double",
+                "placeHolder": "0.2"
+            },
+            {
+                "id": "gamma",
+                "label": "Gamma",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder":"4"
+            },
+            {
+                "id": "min_child_weight",
+                "label": "Minimum Child Weight",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder":"6"
+            },
+            {
+                "id": "silent",
+                "label": "Silent",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder":"0"
+            },
+            {
+                "id": "num_round",
+                "label": "Number of Round",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder":"10"
+            },
+            {
+			    "id": "connection",
+			    "label": "Connection",
+			    "mandatory": true,
+			    "visibleOption": [],
+			    "control": "ConnectionSelector",
+			    "cloudType": "aws",
+			    "placeHolder": "Select Connection",
+				 "description": "Predefined connection. List of connections can be updated from Connection Management dialog on GUI."
+			},
+            {
+                "id": "role",
+                "label": "IAM Role",
+                "description": "An AWS IAM role (either name or full ARN)",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "String",
+                "placeHolder": "either name or Full ARN"
+            },
+            {
+                "id": "region_name",
+                "label": "AWS Region",
+                "description": "",
+                "mandatory": true,
+                "items": [
+                    {
+                        "label": "US East (N. Virginia)",
+                        "value": "us-east-1",
+                        "default": false
+                    },
+                    {
+                        "label": "US East (Ohio)",
+                        "value": "us-east-2",
+                        "default": false
+                    },
+                    {
+                        "label": "US West (Oregon)",
+                        "value": "us-west-2",
+                        "default": true
+                    },
+                    {
+                        "label": "Asia Pacific (Seoul)",
+                        "value": "ap-northeast-2",
+                        "default": false
+                    },
+                    {
+                        "label": "Asia Pacific (Sydney)",
+                        "value": "ap-southeast-2",
+                        "default": false
+                    },
+                    {
+                        "label": "Asia Pacific (Tokyo)",
+                        "value": "ap-northeast-1",
+                        "default": false
+                    },
+                    {
+                        "label": "EU (Frankfurt)",
+                        "value": "eu-central-1",
+                        "default": false
+                    },
+                    {
+                        "label": "EU (Ireland)",
+                        "value": "eu-west-1",
+                        "default": false
+                    }
+                ],
+                "visibleOption": [],
+                "control": "DropDownList",
+                "columnType": [],
+                "validation": [],
+                "type": "String"
+            },            
+            {
+                "id": "kwargstr",
+                "label": "Keyword Arguments",
+                "description": "Keyword arguments. See <https://docs.aws.amazon.com/sagemaker/latest/dg/fact-machines-hyperparameters.html>",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "String",
+                "placeHolder": "keyword arguements for XGBoost Algorithm"
+            },
+            {
+                "id": "wait",
+                "label": "Wait",
+                "description": "Whether the function should wait until the training job completes.",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "BooleanRadio",
+                "columnType": [],
+                "validation": [],
+                "defaultValue": true
+            },
+            {
+                "id": "instance_count",
+                "label": "Instance Count",
+                "description": "The number of ML compute instances to use.",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder":"1"
+            },
+            {
+                "id": "instance_type",
+                "label": "Instance Type",
+                "description": "Instance Type. For more information please visit the following web page. <https://aws.amazon.com/sagemaker/pricing/?nc1=h_ls>",
+                "mandatory": false,
+                "items": [
+                    {
+                        "label": "ml.m5.large",
+                        "value": "ml.m5.large",
+                        "default": true
+                    },
+                    {
+                        "label": "ml.m5.xlarge",
+                        "value": "ml.m5.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.2xlarge",
+                        "value": "ml.m5.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.4xlarge",
+                        "value": "ml.m5.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.12xlarge",
+                        "value": "ml.m5.12xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m5.24xlarge",
+                        "value": "ml.m5.24xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.xlarge",
+                        "value": "ml.m4.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.2xlarge",
+                        "value": "ml.m4.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.4xlarge",
+                        "value": "ml.m4.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.10xlarge",
+                        "value": "ml.m4.10xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.m4.16xlarge",
+                        "value": "ml.m4.16xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.xlarge",
+                        "value": "ml.c5.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.2xlarge",
+                        "value": "ml.c5.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.4xlarge",
+                        "value": "ml.c5.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.9xlarge",
+                        "value": "ml.c5.9xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c5.18xlarge",
+                        "value": "ml.c5.18xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.xlarge",
+                        "value": "ml.c4.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.2xlarge",
+                        "value": "ml.c4.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.4xlarge",
+                        "value": "ml.c4.4xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.c4.8xlarge",
+                        "value": "ml.c4.8xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p3.2xlarge",
+                        "value": "ml.p3.2xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p3.8xlarge",
+                        "value": "ml.p3.8xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p3.16xlarge",
+                        "value": "ml.p3.16xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p2.xlarge",
+                        "value": "ml.p2.xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p2.8xlarge",
+                        "value": "ml.p2.8xlarge",
+                        "default": false
+                    },
+                    {
+                        "label": "ml.p2.16xlarge",
+                        "value": "ml.p2.16xlarge",
+                        "default": false
+                    }
+                ],
+                "visibleOption": [],
+                "control": "DropDownList",
+                "columnType": [],
+                "validation": []
+            },
+            {
+                "id": "volume_size",
+                "label": "Training Instance Volume Size (GB)",
+                "description": "",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "min": 5,
+                "max": 30,
+                "placeHolder": "30"
+            },
+            {
+                "id": "max_runtime",
+                "label": "Max Training Time (Min)",
+                "description": "",
+                "mandatory": false,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder": "86400"
+            }
+        ]
+    },
+    "md": ""
+}
