@@ -38,7 +38,8 @@
 			    "visibleOption": [],
 			    "control": "ConnectionSelector",
 			    "cloudType": "aws",
-			    "placeHolder": "Select Connection"
+			    "placeHolder": "Select Connection",
+			    "description": ""
 			},
             {
                 "id": "prediction_col",

@@ -5,23 +5,26 @@
     },
     "specJson": {
         "category": "aws",
-        "func": "brightics.function.sagemaker$linear_learner_predict",
-        "name": "brightics.function.sagemaker$linear_learner_predict",
+        "func": "brightics.function.sagemaker$pca_predict",
+        "name": "brightics.function.sagemaker$pca_predict",
         "context": "python",
-        "label": "Linear Learner Predict (Sagemaker)",
-        "description": "Linear models are supervised learning algorithms used for solving either classification or regression problems. For input, you give the model labeled examples (x, y). x is a high-dimensional vector and y is a numeric label. For binary classification problems, the label must be either 0 or 1. For multiclass classification problems, the labels must be from 0 to num_classes - 1. For regression problems, y is a real number. The algorithm learns a linear function, or, for classification problems, a linear threshold function, and maps a vector x to an approximation of the label y.\n\nDescription here. <https://docs.aws.amazon.com/sagemaker/latest/dg/linear-learner.html>",
+        "label": "PCA Predict (SageMaker)",
+        "description": "This function predicts from a SageMaker built-in Principal Components Analysis model using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/pca.html>",
         "tags": [],
         "version": "3.6",
         "inputs": {
             "table": "",
             "model": ""
         },
+        "outputs": {
+            "out_table": ""
+        },
         "meta": {
             "table": {
                 "type": "table"
             },
             "model": {
-                "type": "model"
+            	"type": "model"
             },
             "out_table": {
                 "type": "table"
@@ -29,19 +32,19 @@
         },
         "params": [
             {
-              "id": "connection",
-              "label": "Connection",
-              "mandatory": true,
-              "visibleOption": [],
-              "control": "ConnectionSelector",
-              "cloudType": "aws",
-              "placeHolder": "Select Connection",
+			    "id": "connection",
+			    "label": "Connection",
+			    "mandatory": true,
+			    "visibleOption": [],
+			    "control": "ConnectionSelector",
+			    "cloudType": "aws",
+			    "placeHolder": "Select Connection",
 				 "description": ""
             },
             {
                 "id": "prediction_col",
-                "label": "Prediction Column Name",
-                "description": "Prediction Column Name",
+                "label": "Prediction Column Prefix",
+                "description": "Prediction Column Prefix.",
                 "mandatory": false,
                 "items": [],
                 "visibleOption": [],
@@ -52,9 +55,9 @@
                 "placeHolder": "prediction"
             },
             {
-                "id": "train_instance_count",
-                "label": "Train Instance Count",
-                "description": "The number of ML compute instances to use. For distributed training",
+                "id": "instance_count",
+                "label": "Instance Count",
+                "description": "The number of ML compute instances to use.",
                 "mandatory": false,
                 "items": [],
                 "visibleOption": [],
@@ -62,13 +65,12 @@
                 "columnType": [],
                 "validation": [],
                 "type": "Integer",
-                "min": 1,
                 "placeHolder": "1"
             },
             {
-                "id": "train_instance_type",
-                "label": "Train Instance Type",
-                "description": "",
+                "id": "instance_type",
+                "label": "Instance Type",
+                "description": "Instance Type",
                 "mandatory": false,
                 "items": [
                     {
@@ -207,10 +209,7 @@
                 "columnType": [],
                 "validation": []
             }
-        ],
-        "outputs": {
-            "out_table": ""
-        }
+        ]
     },
     "md": ""
 }

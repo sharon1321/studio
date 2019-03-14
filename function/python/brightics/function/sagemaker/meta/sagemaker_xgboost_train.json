@@ -5,15 +5,18 @@
     },
     "specJson": {
         "category": "aws",
-        "func": "brightics.function.sagemaker$knn_train",
-        "name": "brightics.function.sagemaker$knn_train",
+        "func": "brightics.function.sagemaker$xgboost_train",
+        "name": "brightics.function.sagemaker$xgboost_train",
         "context": "python",
-        "label": "K-Nearest Neighbors Train (Sagemaker)",
-        "description": "Amazon SageMaker k-nearest neighbors (k-NN) algorithm is an index-based algorithm. It uses a non-parametric method for classification or regression. For classification problems, the algorithm queries the k points that are closest to the sample point and returns the most frequently used label of their class as the predicted label. For regression problems, the algorithm queries the k closest points to the sample point and returns the average of their feature values as the predicted value.\n\nDescription here. <https://docs.aws.amazon.com/sagemaker/latest/dg/k-nearest-neighbors.html>",
+        "label": "XGBoost Train (SageMaker)",
+        "description": "",
         "tags": [],
         "version": "3.6",
         "inputs": {
             "table": ""
+        },
+        "outputs": {
+            "model": ""
         },
         "meta": {
             "table": {
@@ -27,7 +30,7 @@
             {
                 "id": "feature_cols",
                 "label": "Feature Columns",
-                "description": "Input Columns",
+                "description": "",
                 "mandatory": true,
                 "items": [],
                 "visibleOption": [],
@@ -35,11 +38,12 @@
                 "columnType": [
                     "Integer",
                     "Long",
-                    "Double"
+                    "Float",
+                    "Double",
+                    "Boolean"
                 ],
                 "validation": [],
-                "multiple": true,
-                "rowCount": 5
+                "multiple": true
             },
             {
                 "id": "label_col",
@@ -52,15 +56,29 @@
                 "columnType": [
                     "Integer",
                     "Long",
-                    "Double"
+                    "Float",
+                    "Double",
+                    "Boolean"
                 ],
                 "validation": [],
                 "multiple": false
             },
             {
-                "id": "k",
-                "label": "Number of nearest neighbors(K)",
-                "description": "The number of nearest neighbors",
+                "id": "num_class",
+                "label": "Number of Classes",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer"
+            },
+            {
+                "id": "max_depth",
+                "label": "Max Depth",
+                "description": "",
                 "mandatory": true,
                 "items": [],
                 "visibleOption": [],
@@ -68,52 +86,95 @@
                 "columnType": [],
                 "validation": [],
                 "type": "Integer",
-                "min": 1
+                "placeHolder": "5"
             },
             {
-                "id": "predictor_type",
-                "label": "Predictor Type",
-                "description": "The type of inference to use on the data labels",
+                "id": "eta",
+                "label": "ETA",
+                "description": "",
                 "mandatory": true,
-                "items": [
-                    {
-                        "label": "classifier",
-                        "value": "classifier",
-                        "default": true
-                    },
-                    {
-                        "label": "regressor",
-                        "value": "regressor",
-                        "default": false
-                    }
-                ],
+                "items": [],
                 "visibleOption": [],
-                "control": "RadioButton",
+                "control": "InputBox",
                 "columnType": [],
-                "validation": []
+                "validation": [],
+                "type": "Double",
+                "placeHolder": "0.2"
             },
             {
-              "id": "connection",
-              "label": "Connection",
-              "mandatory": true,
-              "visibleOption": [],
-              "control": "ConnectionSelector",
-              "cloudType": "aws",
-              "placeHolder": "Select Connection",
+                "id": "gamma",
+                "label": "Gamma",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder":"4"
+            },
+            {
+                "id": "min_child_weight",
+                "label": "Minimum Child Weight",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder":"6"
+            },
+            {
+                "id": "silent",
+                "label": "Silent",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder":"0"
+            },
+            {
+                "id": "num_round",
+                "label": "Number of Round",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "Integer",
+                "placeHolder":"10"
+            },
+            {
+			    "id": "connection",
+			    "label": "Connection",
+			    "mandatory": true,
+			    "visibleOption": [],
+			    "control": "ConnectionSelector",
+			    "cloudType": "aws",
+			    "placeHolder": "Select Connection",
 				 "description": ""
-            },
+			},
             {
-              "id": "role",
-              "label": "IAM Role",
-              "description": "An AWS IAM role (either name or full ARN)",
-              "mandatory": true,
-              "items": [],
-              "visibleOption": [],
-              "control": "InputBox",
-              "columnType": [],
-              "validation": [],
-              "type": "String",
-              "placeHolder": "either name or full ARN"
+                "id": "role",
+                "label": "IAM Role",
+                "description": "An AWS IAM role (either name or full ARN)",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "String",
+                "placeHolder": "either name or Full ARN"
             },
             {
                 "id": "region_name",
@@ -167,24 +228,11 @@
                 "columnType": [],
                 "validation": [],
                 "type": "String"
-            },
-            {
-                "id": "sample_size",
-                "label": "Sample Size",
-                "description": "The number of data points to be sampled from the training data set",
-                "mandatory": false,
-                "items": [],
-                "visibleOption": [],
-                "control": "InputBox",
-                "columnType": [],
-                "validation": [],
-                "type": "Integer",
-                "min": 1
-            },
+            },            
             {
                 "id": "kwargstr",
                 "label": "Keyword Arguments",
-                "description": "Keyword arguments. See <https://docs.aws.amazon.com/sagemaker/latest/dg/k-nearest-neighbors.html>",
+                "description": "Keyword arguments. See <https://docs.aws.amazon.com/sagemaker/latest/dg/fact-machines-hyperparameters.html>",
                 "mandatory": false,
                 "items": [],
                 "visibleOption": [],
@@ -192,20 +240,7 @@
                 "columnType": [],
                 "validation": [],
                 "type": "String",
-                "placeHolder": "ex) index_type='faiss.IVFPQ', faiss_index_pq_m=1"
-            },
-            {
-                "id": "mini_batch_size",
-                "label": "Size of Mini-batch",
-                "description": "The size of mini-batch used for training.",
-                "mandatory": false,
-                "items": [],
-                "visibleOption": [],
-                "control": "InputBox",
-                "columnType": [],
-                "validation": [],
-                "type": "Integer",
-                "placeHolder": "5000"
+                "placeHolder": "keyword arguements for XGBoost Algorithm"
             },
             {
                 "id": "wait",
@@ -220,22 +255,9 @@
                 "defaultValue": true
             },
             {
-                "id": "job_name",
-                "label": "Job Name",
-                "description": "Training job name. If not specified, the estimator generates a default job name, based on the training image name and current timestamp.",
-                "mandatory": false,
-                "items": [],
-                "visibleOption": [],
-                "control": "InputBox",
-                "columnType": [],
-                "validation": [],
-                "type": "String",
-                "placeHolder": ""
-            },
-            {
-                "id": "train_instance_count",
-                "label": "Train Instance Count",
-                "description": "The number of ML compute instances to use. For distributed training",
+                "id": "instance_count",
+                "label": "Instance Count",
+                "description": "The number of ML compute instances to use.",
                 "mandatory": false,
                 "items": [],
                 "visibleOption": [],
@@ -243,12 +265,11 @@
                 "columnType": [],
                 "validation": [],
                 "type": "Integer",
-                "min": 1,
-                "placeHolder": "1"
+                "placeHolder":"1"
             },
             {
-                "id": "train_instance_type",
-                "label": "Train Instance Type",
+                "id": "instance_type",
+                "label": "Instance Type",
                 "description": "",
                 "mandatory": false,
                 "items": [
@@ -389,9 +410,9 @@
                 "validation": []
             },
             {
-                "id": "train_volume_size",
-                "label": "Train Volume Size in GB",
-                "description": "The size of the ML storage volume that you want to provision.",
+                "id": "volume_size",
+                "label": "Training Instance Volume Size (GB)",
+                "description": "",
                 "mandatory": false,
                 "items": [],
                 "visibleOption": [],
@@ -399,12 +420,14 @@
                 "columnType": [],
                 "validation": [],
                 "type": "Integer",
+                "min": 5,
+                "max": 30,
                 "placeHolder": "30"
             },
             {
-                "id": "train_max_run",
-                "label": "Timeout in Seconds",
-                "description": "Timeout in seconds for training",
+                "id": "max_runtime",
+                "label": "Max Training Time (Min)",
+                "description": "",
                 "mandatory": false,
                 "items": [],
                 "visibleOption": [],
@@ -414,10 +437,7 @@
                 "type": "Integer",
                 "placeHolder": "86400"
             }
-        ],
-        "outputs": {
-            "model": ""
-        }
+        ]
     },
     "md": ""
 }

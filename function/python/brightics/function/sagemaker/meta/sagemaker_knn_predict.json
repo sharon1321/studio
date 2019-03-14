@@ -29,13 +29,14 @@
         },
         "params": [
             {
-              "id": "connection",
-              "label": "Connection",
-              "mandatory": true,
-              "visibleOption": [],
-              "control": "ConnectionSelector",
-              "cloudType": "aws",
-              "placeHolder": "Select Connection"
+				 "id": "connection",
+				 "label": "Connection",
+				 "mandatory": true,
+				 "visibleOption": [],
+				 "control": "ConnectionSelector",
+				 "cloudType": "aws",
+				 "placeHolder": "Select Connection",
+				 "description": ""
             },
             {
                 "id": "prediction_col",

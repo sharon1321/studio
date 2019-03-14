@@ -5,15 +5,18 @@
     },
     "specJson": {
         "category": "aws",
-        "func": "brightics.function.sagemaker$knn_train",
-        "name": "brightics.function.sagemaker$knn_train",
+        "func": "brightics.function.sagemaker$pca_train",
+        "name": "brightics.function.sagemaker$pca_train",
         "context": "python",
-        "label": "K-Nearest Neighbors Train (Sagemaker)",
-        "description": "Amazon SageMaker k-nearest neighbors (k-NN) algorithm is an index-based algorithm. It uses a non-parametric method for classification or regression. For classification problems, the algorithm queries the k points that are closest to the sample point and returns the most frequently used label of their class as the predicted label. For regression problems, the algorithm queries the k closest points to the sample point and returns the average of their feature values as the predicted value.\n\nDescription here. <https://docs.aws.amazon.com/sagemaker/latest/dg/k-nearest-neighbors.html>",
+        "label": "PCA Train (SageMaker)",
+        "description": "This function trains a PCA(principal Component Analysis) model, which is an algorithm provided by Amazon SageMaker, using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/pca.html>",
         "tags": [],
         "version": "3.6",
         "inputs": {
             "table": ""
+        },
+        "outputs": {
+            "model": ""
         },
         "meta": {
             "table": {
@@ -27,7 +30,7 @@
             {
                 "id": "feature_cols",
                 "label": "Feature Columns",
-                "description": "Input Columns",
+                "description": "Feature Columns.",
                 "mandatory": true,
                 "items": [],
                 "visibleOption": [],
@@ -35,85 +38,84 @@
                 "columnType": [
                     "Integer",
                     "Long",
-                    "Double"
+                    "Float",
+                    "Double",
+                    "Boolean"
                 ],
                 "validation": [],
                 "multiple": true,
                 "rowCount": 5
             },
             {
-                "id": "label_col",
-                "label": "Label Column",
+                "id": "num_components",
+                "label": "Number of Components",
                 "description": "",
-                "mandatory": true,
-                "items": [],
-                "visibleOption": [],
-                "control": "ColumnSelector",
-                "columnType": [
-                    "Integer",
-                    "Long",
-                    "Double"
-                ],
-                "validation": [],
-                "multiple": false
-            },
-            {
-                "id": "k",
-                "label": "Number of nearest neighbors(K)",
-                "description": "The number of nearest neighbors",
                 "mandatory": true,
                 "items": [],
                 "visibleOption": [],
                 "control": "InputBox",
                 "columnType": [],
                 "validation": [],
-                "type": "Integer",
-                "min": 1
+                "placeHolder": "64",
+                "type": "Integer"
             },
             {
-                "id": "predictor_type",
-                "label": "Predictor Type",
-                "description": "The type of inference to use on the data labels",
+                "id": "algorithm_mode",
+                "label": "Algorithm Mode",
+                "description": "",
                 "mandatory": true,
                 "items": [
                     {
-                        "label": "classifier",
-                        "value": "classifier",
+                        "label": "regular",
+                        "value": "regular",
                         "default": true
                     },
                     {
-                        "label": "regressor",
-                        "value": "regressor",
+                        "label": "randomized",
+                        "value": "randomized",
                         "default": false
                     }
                 ],
                 "visibleOption": [],
-                "control": "RadioButton",
+                "control": "DropDownList",
                 "columnType": [],
-                "validation": []
+                "validation": [],
+                "type": "String"
             },
             {
-              "id": "connection",
-              "label": "Connection",
-              "mandatory": true,
-              "visibleOption": [],
-              "control": "ConnectionSelector",
-              "cloudType": "aws",
-              "placeHolder": "Select Connection",
+                "id": "subtract_mean",
+                "label": "Subtract Mean",
+                "description": "",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "BooleanRadio",
+                "columnType": [],
+                "validation": [],
+                "defaultValue": true
+            },
+            {
+			    "id": "connection",
+			    "label": "Connection",
+			    "mandatory": true,
+			    "visibleOption": [],
+			    "control": "ConnectionSelector",
+			    "cloudType": "aws",
+			    "placeHolder": "Select Connection",
 				 "description": ""
-            },
-            {
-              "id": "role",
-              "label": "IAM Role",
-              "description": "An AWS IAM role (either name or full ARN)",
-              "mandatory": true,
-              "items": [],
-              "visibleOption": [],
-              "control": "InputBox",
-              "columnType": [],
-              "validation": [],
-              "type": "String",
-              "placeHolder": "either name or full ARN"
+			},
+			{
+                "id": "role",
+                "label": "IAM Role",
+                "description": "An AWS IAM role (either name or full ARN)",
+                "mandatory": true,
+                "items": [],
+                "visibleOption": [],
+                "control": "InputBox",
+                "columnType": [],
+                "validation": [],
+                "type": "String",
+                "placeHolder": "either name or full ARN"
             },
             {
                 "id": "region_name",
@@ -167,24 +169,11 @@
                 "columnType": [],
                 "validation": [],
                 "type": "String"
-            },
-            {
-                "id": "sample_size",
-                "label": "Sample Size",
-                "description": "The number of data points to be sampled from the training data set",
-                "mandatory": false,
-                "items": [],
-                "visibleOption": [],
-                "control": "InputBox",
-                "columnType": [],
-                "validation": [],
-                "type": "Integer",
-                "min": 1
-            },
+            },            
             {
                 "id": "kwargstr",
                 "label": "Keyword Arguments",
-                "description": "Keyword arguments. See <https://docs.aws.amazon.com/sagemaker/latest/dg/k-nearest-neighbors.html>",
+                "description": "Keyword arguments. See <https://docs.aws.amazon.com/sagemaker/latest/dg/pca-hyperparameters.html>",
                 "mandatory": false,
                 "items": [],
                 "visibleOption": [],
@@ -192,7 +181,7 @@
                 "columnType": [],
                 "validation": [],
                 "type": "String",
-                "placeHolder": "ex) index_type='faiss.IVFPQ', faiss_index_pq_m=1"
+                "placeHolder": "ex) linear_wd=0.001, linear_init_method='normal'"
             },
             {
                 "id": "mini_batch_size",
@@ -205,7 +194,7 @@
                 "columnType": [],
                 "validation": [],
                 "type": "Integer",
-                "placeHolder": "5000"
+                "placeHolder": "1000"
             },
             {
                 "id": "wait",
@@ -243,7 +232,6 @@
                 "columnType": [],
                 "validation": [],
                 "type": "Integer",
-                "min": 1,
                 "placeHolder": "1"
             },
             {
@@ -414,10 +402,7 @@
                 "type": "Integer",
                 "placeHolder": "86400"
             }
-        ],
-        "outputs": {
-            "model": ""
-        }
+        ]
     },
     "md": ""
 }
