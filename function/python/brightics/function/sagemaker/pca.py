@@ -129,7 +129,7 @@ def pca_predict(
                                  region_name=region_name)
         sagemaker_session = sagemaker.Session(boto_session=boto_session)
 
-        input_cols = model['feature_cols']
+        input_cols = model['input_cols']
 
         record = record_set(sagemaker_session=sagemaker_session,
             features=table[input_cols].values.astype('float32'),
