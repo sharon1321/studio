@@ -38,7 +38,9 @@
                 "columnType": [
                     "Integer",
                     "Long",
-                    "Double"
+                    "Float",
+                    "Double",
+                    "Boolean"
                 ],
                 "validation": [],
                 "multiple": true,

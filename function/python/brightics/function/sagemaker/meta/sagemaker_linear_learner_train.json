@@ -27,15 +27,17 @@
           {
               "id": "feature_cols",
               "label": "Feature Columns",
-              "description": "Input Columns",
+              "description": "Feature Columns",
               "mandatory": true,
               "items": [],
               "visibleOption": [],
               "control": "ColumnSelector",
               "columnType": [
-                  "Integer",
-                  "Long",
-                  "Double"
+                    "Integer",
+                    "Long",
+                    "Float",
+                    "Double",
+                    "Boolean"
               ],
               "validation": [],
               "multiple": true,
@@ -44,15 +46,17 @@
           {
               "id": "label_col",
               "label": "Label Column",
-              "description": "",
+              "description": "Label Column.",
               "mandatory": true,
               "items": [],
               "visibleOption": [],
               "control": "ColumnSelector",
               "columnType": [
-                  "Integer",
-                  "Long",
-                  "Double"
+                    "Integer",
+                    "Long",
+                    "Float",
+                    "Double",
+                    "Boolean"
               ],
               "validation": [],
               "multiple": false

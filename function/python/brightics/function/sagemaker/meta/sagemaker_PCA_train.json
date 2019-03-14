@@ -28,9 +28,9 @@
         },
         "params": [
             {
-                "id": "feature_cols",
-                "label": "Feature Columns",
-                "description": "Feature Columns.",
+                "id": "input_cols",
+                "label": "Input Columns",
+                "description": "Input Columns.",
                 "mandatory": true,
                 "items": [],
                 "visibleOption": [],

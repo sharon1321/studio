@@ -27,7 +27,7 @@
             {
                 "id": "feature_cols",
                 "label": "Feature Columns",
-                "description": "Input Columns",
+                "description": "Feature columns.",
                 "mandatory": true,
                 "items": [],
                 "visibleOption": [],
@@ -35,7 +35,9 @@
                 "columnType": [
                     "Integer",
                     "Long",
-                    "Double"
+                    "Float",
+                    "Double",
+                    "Boolean"
                 ],
                 "validation": [],
                 "multiple": true,
@@ -44,7 +46,7 @@
             {
                 "id": "label_col",
                 "label": "Label Column",
-                "description": "",
+                "description": "Label Column.",
                 "mandatory": true,
                 "items": [],
                 "visibleOption": [],
@@ -52,7 +54,9 @@
                 "columnType": [
                     "Integer",
                     "Long",
-                    "Double"
+                    "Float",
+                    "Double",
+                    "Boolean"
                 ],
                 "validation": [],
                 "multiple": false

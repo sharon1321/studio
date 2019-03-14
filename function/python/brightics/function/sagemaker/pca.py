@@ -13,7 +13,7 @@ from brightics.function.utils import _model_dict
 
 
 def pca_train(table,
-    feature_cols,
+    input_cols,
     role,
     region_name, num_components, algorithm_mode, subtract_mean, connection,
     wait=True,
@@ -45,7 +45,7 @@ def pca_train(table,
         subtract_mean=subtract_mean,
         **kwargs)
 
-    data_np_arr = table[feature_cols].values.astype('float32')
+    data_np_arr = table[input_cols].values.astype('float32')
 
     try:
         pca.fit(pca.record_set(data_np_arr), wait=wait,
@@ -97,7 +97,7 @@ def pca_train(table,
             | ```'''.format(message=message, logs=logs)))
 
             model = _model_dict('sagemaker.PCA_train')
-            model['feature_cols'] = feature_cols
+            model['input_cols'] = input_cols
             model['region_name'] = region_name
             model['num_components'] = num_components
             model['job_name'] = job_name

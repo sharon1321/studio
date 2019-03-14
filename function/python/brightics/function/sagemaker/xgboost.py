@@ -15,7 +15,6 @@ from brightics.function.sagemaker.utils import kwargs_from_string
 from brightics.function.utils import _model_dict
 
 
-
 def to_libsvm(f, labels, values):
     f.write(bytes('\n'.join(
         ['{} {}'.format(label, ' '.join(['{}:{}'.format(i + 1, el) for i, el in enumerate(vec)])) for label, vec in
@@ -35,19 +34,20 @@ def upload_to_s3(labels, vectors, prefix, bucket, s3_client, num_partition):
                   vectors[i * partition_bound:(i + 1) * partition_bound])
         f.seek(0)
         key = "{}/train/input{}".format(prefix, str(i))
-        url = 's3n://{}/{}'.format(bucket, key)
         write_to_s3(f, bucket, key, s3_client)
 
 
-def xgboost_train(table, feature_cols, label_col, connection, role,
-    region_name, max_depth, eta, gamma, min_child_weight, silent, num_class, num_round,
+def xgboost_train(table, 
+    feature_cols, label_col, num_class, 
+    connection, role, region_name,
+    max_depth=5, num_round=10,
     kwargstr=None,
     instance_count=1,
     instance_type='ml.m5.xlarge',
     volume_size=30,
     max_runtime=24 * 60 * 60,
     wait=True, objective='multi:softmax'):
-    
+
     kwargs = {}
     if kwargstr is not None:
         kwargs = kwargs_from_string(kwargstr)
@@ -79,7 +79,7 @@ def xgboost_train(table, feature_cols, label_col, connection, role,
         },
         "RoleArn": role,
         "OutputDataConfig": {
-            "S3OutputPath": bucket_path + "/" + prefix 
+            "S3OutputPath": bucket_path + "/" + prefix
         },
         "ResourceConfig": {
             "InstanceCount": instance_count,
@@ -88,10 +88,6 @@ def xgboost_train(table, feature_cols, label_col, connection, role,
         },
         "HyperParameters": {
             "max_depth":str(max_depth),
-            "eta":str(eta),
-            "gamma":str(gamma),
-            "min_child_weight":str(min_child_weight),
-            "silent":str(silent),
             "objective": str(objective),
             "num_class": str(num_class),
             "num_round": str(num_round)
@@ -123,25 +119,28 @@ def xgboost_train(table, feature_cols, label_col, connection, role,
     upload_to_s3(label_data, input_data, prefix, bucket, s3, instance_count)
     job_name = 'sagemaker-xgboost-' + strftime("%Y-%m-%d-%H-%M-%S", gmtime())
     try:
-        if (instance_count == 1):
+        if instance_count == 1:
 
             single_machine_job_params = copy.deepcopy(common_training_params)
             single_machine_job_params['TrainingJobName'] = job_name
-            single_machine_job_params['OutputDataConfig']['S3OutputPath'] = bucket_path + "/" + prefix + "/xgboost-single"
+            single_machine_job_params['OutputDataConfig']['S3OutputPath'] = \
+                bucket_path + "/" + prefix + "/xgboost-single"
             single_machine_job_params['ResourceConfig']['InstanceCount'] = 1
-        
+
             sagemaker_client.create_training_job(**single_machine_job_params)
-            if (wait == True):
-                sagemaker_client.get_waiter('training_job_completed_or_stopped').wait(TrainingJobName=job_name)
+            if wait is True:
+                sagemaker_client.get_waiter('training_job_completed_or_stopped').wait(
+                    TrainingJobName=job_name)
         else:
             distributed_job_params = copy.deepcopy(common_training_params)
             distributed_job_params['TrainingJobName'] = job_name
-            distributed_job_params['OutputDataConfig']['S3OutputPath'] = bucket_path + "/" + prefix + "/xgboost-distributed"
+            distributed_job_params['OutputDataConfig']['S3OutputPath'] = \
+                bucket_path + "/" + prefix + "/xgboost-distributed"
             distributed_job_params['ResourceConfig']['InstanceCount'] = instance_count
 
             sagemaker_client.create_training_job(**distributed_job_params)
             distributed_job_params['InputDataConfig'][0]['DataSource']['S3DataSource']['S3DataDistributionType'] = 'ShardedByS3Key'
-            if (wait == True):
+            if wait is True:
                 sagemaker_client.get_waiter('training_job_completed_or_stopped').wait(TrainingJobName=job_name)
 
         status = sagemaker_client.describe_training_job(TrainingJobName=job_name)['TrainingJobStatus']
