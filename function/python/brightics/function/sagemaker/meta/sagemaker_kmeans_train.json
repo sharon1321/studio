@@ -10,7 +10,7 @@
         "context": "python",
         "label": "K-Means Train (SageMaker)",
         "description": "This function trains a k-means model, which is an algorithm provided by Amazon SageMaker, using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/k-means.html>",
-        "tags": [],
+        "tags": ["aws", "amazon", "sagemaker", "kmeans"],
         "version": "3.6",
         "inputs": {
             "table": ""

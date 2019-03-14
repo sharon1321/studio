@@ -10,7 +10,7 @@
         "context": "python",
         "label": "XGBoost Predict (SageMaker)",
         "description": "",
-        "tags": [],
+        "tags": ["aws", "amazon", "sagemaker", "gradient", "boosting"],
         "version": "3.6",
         "inputs": {
             "table": "",
