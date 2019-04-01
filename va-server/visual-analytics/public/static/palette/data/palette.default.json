@@ -1,5 +1,68 @@
 [
     {
+        "label": "Cloud - AWS",
+        "key": "aws",
+        "visible": true,
+        "functions": [
+            {
+                "func": "readFromS3",
+                "visible": true
+            },
+            {
+                "func": "writeToS3",
+                "visible": true
+            },
+            {
+                "func": "brightics.function.sagemaker$factorization_machines_train",
+                "visible": true
+            },
+            {
+                "func": "brightics.function.sagemaker$factorization_machines_predict",
+                "visible": true
+            },
+            {
+                "func": "brightics.function.sagemaker$kmeans_train",
+                "visible": true
+            },
+            {
+                "func": "brightics.function.sagemaker$kmeans_predict",
+                "visible": true
+            },
+            {
+                "func": "brightics.function.sagemaker$knn_train",
+                "visible": true
+            },
+            {
+                "func": "brightics.function.sagemaker$knn_predict",
+                "visible": true
+            },
+            {
+                "func": "brightics.function.sagemaker$linear_learner_traintrain",
+                "visible": true
+            },
+            {
+                "func": "brightics.function.sagemaker$linear_learner_predict",
+                "visible": true
+            },
+            {
+                "func": "brightics.function.sagemaker$pca_train",
+                "visible": true
+            },
+            {
+                "func": "brightics.function.sagemaker$pca_predict",
+                "visible": true
+            },
+            {
+                "func": "brightics.function.sagemaker$xgboost_train",
+                "visible": true
+            },
+            {
+                "func": "brightics.function.sagemaker$xgboost_predict",
+                "visible": true
+            }
+        ]
+    },
+    {
         "label": "I/O",
         "key": "io",
         "visible": true,
@@ -1259,69 +1322,6 @@
             {
                 "func": "uncertaintyQuantification",
                 "visible": false
-            }
-        ]
-    },
-    {
-        "label": "Cloud - AWS",
-        "key": "aws",
-        "visible": true,
-        "functions": [
-            {
-                "func": "readFromS3",
-                "visible": true
-            },
-            {
-                "func": "writeToS3",
-                "visible": true
-            },
-            {
-                "func": "brightics.function.sagemaker$factorization_machines_train",
-                "visible": true
-            },
-            {
-                "func": "brightics.function.sagemaker$factorization_machines_predict",
-                "visible": true
-            },
-            {
-                "func": "brightics.function.sagemaker$kmeans_train",
-                "visible": true
-            },
-            {
-                "func": "brightics.function.sagemaker$kmeans_predict",
-                "visible": true
-            },
-            {
-                "func": "brightics.function.sagemaker$knn_train",
-                "visible": true
-            },
-            {
-                "func": "brightics.function.sagemaker$knn_predict",
-                "visible": true
-            },
-            {
-                "func": "brightics.function.sagemaker$linear_learner_traintrain",
-                "visible": true
-            },
-            {
-                "func": "brightics.function.sagemaker$linear_learner_predict",
-                "visible": true
-            },
-            {
-                "func": "brightics.function.sagemaker$pca_train",
-                "visible": true
-            },
-            {
-                "func": "brightics.function.sagemaker$pca_predict",
-                "visible": true
-            },
-            {
-                "func": "brightics.function.sagemaker$xgboost_train",
-                "visible": true
-            },
-            {
-                "func": "brightics.function.sagemaker$xgboost_predict",
-                "visible": true
             }
         ]
     },
