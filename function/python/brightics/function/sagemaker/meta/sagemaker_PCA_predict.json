@@ -10,7 +10,7 @@
         "context": "python",
         "label": "PCA Predict (SageMaker)",
         "description": "This function predicts from a SageMaker built-in Principal Components Analysis model using AWS(Amazon Web Services) resources such as S3 buckets, ML instances. \n\nReference:\n+ <https://docs.aws.amazon.com/sagemaker/latest/dg/pca.html>",
-        "tags": [],
+        "tags": ["aws", "amazon", "sagemaker", "principal", "component", "analysis"],
         "version": "3.6",
         "inputs": {
             "table": "",
