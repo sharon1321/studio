@@ -98,6 +98,3 @@ class NumberValidator(ParamValidator):
         if self.value < criteria:
             self.errors.append(('BR-0000', str(self.name) + ' should be greater than or equal to ' + str(criteria)))
         return self
-
-
-

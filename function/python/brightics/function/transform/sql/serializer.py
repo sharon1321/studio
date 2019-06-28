@@ -16,6 +16,7 @@
 
 import pickle
 import numpy as np
+from brightics.common.datatypes import get_logical_type_from_numpy
 
 
 def _serialize(obj):
@@ -61,10 +62,23 @@ def _get_serialized_table(table, cols_to_serialize):
 def _get_columns_to_serialize(table):
     dtypes = table.dtypes
     cols = dtypes.index
-    
-    def _need_serialize(col, tpe, table):
-        return (tpe == 'object' and not _is_string(table[col])) or np.issubdtype(tpe, np.datetime64)
-    
+
+    def _need_serialize(col, dtype, table):
+        tpe = get_logical_type_from_numpy(table[col])
+
+        if np.issubdtype(dtype, np.datetime64):
+            need_serialize = True
+        elif dtype == 'object':
+            need_serialize = True
+            if tpe == 'bytes':
+                need_serialize = False
+            elif tpe == 'string':
+                need_serialize = False
+        else:
+            need_serialize = False
+
+        return need_serialize
+
     def _is_string(series):
         n_sample = np.min((series.size, 100))
         sample = series.sample(n_sample)
@@ -82,4 +96,3 @@ def _get_columns_to_serialize(table):
         return True
     
     return [col for col, tpe in zip(cols, dtypes) if _need_serialize(col, tpe, table) ]
-
